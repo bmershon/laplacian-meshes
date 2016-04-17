@@ -21,9 +21,24 @@ import scipy.io as sio
 #and K is the number of anchors)
 def getLaplacianMatrixUmbrella(mesh, anchorsIdx):
     #TODO: These are dummy values
-    I = [0]
-    J = [0]
-    V = [0]
+    N = mesh.VPos.shape[0] # N x 3
+    K = anchorsIdx.shape[0]
+
+    I = []
+    J = []
+    V = []
+
+    for i in range(N):
+        neighbors = mesh.vertices[i].getVertexNeighbors()
+        indices = map(lambda x: x.ID, neighbors)
+        n = len(indices)
+        I = I + ([i] * (n + 1)) # repeated row
+        J = J + indices + [i] # column indices and this row
+        V = V + ([-1] * n) + [n] # negative weights and row degree
+    print I[:10]
+    print J[:10]
+    print V[:10]
+   
     L = sparse.coo_matrix((V, (I, J)), shape=(N+K, N)).tocsr()
     return L
 
@@ -46,6 +61,7 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
 #coordinates), anchorsIdx (a parallel array of the indices of the anchors)
 #Returns: Nothing (should update mesh.VPos)
 def solveLaplacianMesh(mesh, anchors, anchorsIdx):
+    getLaplacianMatrixUmbrella(mesh, anchorsIdx)
     print "TODO"
     #TODO: Finish this
 
