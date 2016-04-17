@@ -23,7 +23,6 @@ def getLaplacianMatrixUmbrella(mesh, anchorsIdx):
     #TODO: These are dummy values
     N = mesh.VPos.shape[0] # N x 3
     K = anchorsIdx.shape[0]
-
     I = []
     J = []
     V = []
@@ -35,6 +34,12 @@ def getLaplacianMatrixUmbrella(mesh, anchorsIdx):
         I = I + ([i] * (n + 1)) # repeated row
         J = J + indices + [i] # column indices and this row
         V = V + ([-1] * n) + [n] # negative weights and row degree
+
+    for i in range(K):
+        I = I + [N + i]
+        J = J + [anchorsIdx[i]]
+        V = V + [1] # default anchor weight
+
     print I[:10]
     print J[:10]
     print V[:10]
@@ -61,9 +66,23 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
 #coordinates), anchorsIdx (a parallel array of the indices of the anchors)
 #Returns: Nothing (should update mesh.VPos)
 def solveLaplacianMesh(mesh, anchors, anchorsIdx):
-    getLaplacianMatrixUmbrella(mesh, anchorsIdx)
+    N = mesh.VPos.shape[0] # N x 3
+    K = anchorsIdx.shape[0]
+
+    mesh.VPos[anchorsIdx, :] = anchors
+    L = getLaplacianMatrixUmbrella(mesh, anchorsIdx)
+    delta = np.array(L.dot(mesh.VPos)) # with K anchor rows
+
+    print anchors.shape
+    print L.shape
+    print delta.shape
+    print lsqr(L, delta[:, 0])[0]
+
+    # update mesh with least-squares solution
+    for k in range(3):
+        mesh.VPos[:, k] = lsqr(L, delta[:, k])[0]
+    
     print "TODO"
-    #TODO: Finish this
 
 #Purpose: Given a few RGB colors on a mesh, smoothly interpolate those colors
 #by using their values as anchors and 
