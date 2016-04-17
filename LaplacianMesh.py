@@ -39,12 +39,9 @@ def getLaplacianMatrixUmbrella(mesh, anchorsIdx):
         I = I + [N + i]
         J = J + [anchorsIdx[i]]
         V = V + [1] # default anchor weight
-
-    print I[:10]
-    print J[:10]
-    print V[:10]
    
     L = sparse.coo_matrix((V, (I, J)), shape=(N+K, N)).tocsr()
+    
     return L
 
 #Purpose: To return a sparse matrix representing a laplacian matrix with
@@ -73,10 +70,6 @@ def solveLaplacianMesh(mesh, anchors, anchorsIdx):
     L = getLaplacianMatrixUmbrella(mesh, anchorsIdx)
     delta = np.array(L.dot(mesh.VPos)) # with K anchor rows
 
-    print anchors.shape
-    print L.shape
-    print delta.shape
-    print lsqr(L, delta[:, 0])[0]
 
     # update mesh with least-squares solution
     for k in range(3):
