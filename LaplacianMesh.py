@@ -8,6 +8,7 @@ from scipy.sparse.linalg import lsqr, cg, eigsh
 import matplotlib.pyplot as plt
 import scipy.io as sio
 
+WEIGHT = 1.0 
 
 ##############################################################
 ##                  Laplacian Mesh Editing                  ##
@@ -38,7 +39,7 @@ def getLaplacianMatrixUmbrella(mesh, anchorsIdx):
     for i in range(K):
         I = I + [N + i]
         J = J + [anchorsIdx[i]]
-        V = V + [1] # default anchor weight
+        V = V + [WEIGHT] # default anchor weight
    
     L = sparse.coo_matrix((V, (I, J)), shape=(N+K, N)).tocsr()
     
@@ -66,10 +67,11 @@ def solveLaplacianMesh(mesh, anchors, anchorsIdx):
     N = mesh.VPos.shape[0] # N x 3
     K = anchorsIdx.shape[0]
 
-    mesh.VPos[anchorsIdx, :] = anchors
     L = getLaplacianMatrixUmbrella(mesh, anchorsIdx)
-    delta = np.array(L.dot(mesh.VPos)) # with K anchor rows
-
+    delta = np.array(L.dot(mesh.VPos))
+    
+    for i in range(K):
+        delta[N + i, :] = WEIGHT * anchors[i, :]
 
     # update mesh with least-squares solution
     for k in range(3):
