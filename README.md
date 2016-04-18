@@ -18,7 +18,7 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 *Homer's arms are raised by placing two anchors at his finger tips and moving them vertically. A small handful of anchors placed symmetrically about his body help to restrict edits to his arms. Cotangent weighting is used here*
 
-<img src="img/homer.png" width="404">
-<img src="img/homer-arms-raised.png" width="404">
+<img src="img/homer.png" width="50%">
+<img src="img/homer-arms-raised.png" width="50%">
 
 
