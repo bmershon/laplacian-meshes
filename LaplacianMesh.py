@@ -60,11 +60,26 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
 
     # Build sparse Laplacian Matrix coordinates and values
     for i in range(N):
-        neighbors = mesh.vertices[i].getVertexNeighbors()
+        vertex = mesh.vertices[i]
+        neighbors = vertex.getVertexNeighbors()
         indices = map(lambda x: x.ID, neighbors)
+        weights = []
         n = len(indices)
         I = I + ([i] * (n + 1)) # repeated row
         J = J + indices + [i] # column indices and this row
+        for j in range(n):
+            neighbor = neighbors[j]
+            edge = getEdgeInCommon(vertex, neighbor)
+            faces = [edge.f1, edge.f2]
+            points = []
+            cotangents = []
+
+            for f in range(2):
+                points.append(mesh.VPos[filter(lambda v: v not in [neighbor, vertex], faces[f].getVertices())[0].ID])
+            
+            weights.append(-0.5 * np.dot(points[0], points[1]) / np.cross(points[0], points[1]))
+
+        # TODO, use cotangent weights
         V = V + ([-1] * n) + [n] # negative weights and row degree
 
     # augment Laplacian matrix with anchor weights  
@@ -82,11 +97,13 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
 #Inputs: mesh (polygon mesh object), anchors (a K x 3 numpy array of anchor
 #coordinates), anchorsIdx (a parallel array of the indices of the anchors)
 #Returns: Nothing (should update mesh.VPos)
-def solveLaplacianMesh(mesh, anchors, anchorsIdx):
+def solveLaplacianMesh(mesh, anchors, anchorsIdx, cotangent=True):
     N = mesh.VPos.shape[0] # N x 3
     K = anchorsIdx.shape[0]
 
-    L = getLaplacianMatrixUmbrella(mesh, anchorsIdx)
+    operator = (getLaplacianMatrixUmbrella, getLaplacianMatrixCotangent)
+
+    L = operator[1](mesh, anchorsIdx) if cotangent else operator[0](mesh, anchorsIdx)
     delta = np.array(L.dot(mesh.VPos))
     
     # augment delta solution matrix with weighted anchors
