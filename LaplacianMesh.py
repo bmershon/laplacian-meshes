@@ -71,16 +71,17 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
             neighbor = neighbors[j]
             edge = getEdgeInCommon(vertex, neighbor)
             faces = [edge.f1, edge.f2]
-            points = []
             cotangents = []
 
             for f in range(2):
-                points.append(mesh.VPos[filter(lambda v: v not in [neighbor, vertex], faces[f].getVertices())[0].ID])
-            
-            weights.append(-0.5 * np.dot(points[0], points[1]) / np.cross(points[0], points[1]))
+                if faces[f]:
+                    P = mesh.VPos[filter(lambda v: v not in [neighbor, vertex], faces[f].getVertices())[0].ID]
+                    (u, v) = (mesh.VPos[vertex.ID] - P, mesh.VPos[neighbor.ID] - P)
+                    cotangents.append(np.dot(u, v) / np.sqrt(np.sum(np.square(np.cross(u, v)))))
 
-        # TODO, use cotangent weights
-        V = V + ([-1] * n) + [n] # negative weights and row degree
+            weights.append(-0.5 * np.sum(cotangents)) # cotangent weights
+            
+        V = V + weights + [(-1 * np.sum(weights))] # n negative weights and row vertex sum
 
     # augment Laplacian matrix with anchor weights  
     for i in range(K):
