@@ -79,7 +79,7 @@ def getLaplacianMatrixCotangent(mesh, anchorsIdx):
                     (u, v) = (mesh.VPos[vertex.ID] - P, mesh.VPos[neighbor.ID] - P)
                     cotangents.append(np.dot(u, v) / np.sqrt(np.sum(np.square(np.cross(u, v)))))
 
-            weights.append(-0.5 * np.sum(cotangents)) # cotangent weights
+            weights.append(-1 / len(cotangents) * np.sum(cotangents)) # cotangent weights
             
         V = V + weights + [(-1 * np.sum(weights))] # n negative weights and row vertex sum
 
