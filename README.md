@@ -6,6 +6,8 @@ Please view this README rendered by GitHub at https://github.com/bmershon/laplac
 
 This assignment was completed as part of a course in 3D Digital Geometry (Math 290) taken at Duke University during Spring 2016. The course was taught by [Chris Tralie](http://www.ctralie.com/).
 
+*LaplacianMesh.py* is the file student's are responsible for editing. The rendering engine and GUI is provided by Chris Tralie.
+
 ## Introduction
 
 This assignment revolves around the [Laplace operator](https://en.wikipedia.org/wiki/Laplace_operator). Here, the operator is realized as a big ol' matrix which, when multiplied (on the left) by the matrix holding the mesh's vertices, gives us the curvature at each vertex. There are two flavors of the **Laplacian matrix** used here: umbrella weighting and cotangent weighting. The latter method of weighting attempts to correct for the uneven resolution of the mesh. 
