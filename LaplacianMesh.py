@@ -120,38 +120,24 @@ def solveLaplacianMesh(mesh, anchors, anchorsIdx, cotangent=True):
 #Purpose: Given a few RGB colors on a mesh, smoothly interpolate those colors
 #by using their values as anchors and 
 #Inputs: mesh (polygon mesh object), anchors (a K x 3 numpy array of anchor
-#coordinates), anchorsIdx (a parallel array of the indices of the anchors)
-#Returns: Nothing (should update mesh.VPos)
+#coordinates), colorsIdx (a parallel array of the indices of the RGB anchor indices)
 def smoothColors(mesh, anchors, colorsIdx):
-    n = mesh.VPos.shape[0] # N x 3
-    colors = np.zeros((N, 3)) #dummy values (all black)
-    K = anchorsIdx.shape[0]
-    I = []
-    J = []
-    V = []
+    colorsIdx = np.array(colorsIdx)
+    n = mesh.VPos.shape[0] 
+    k = anchors.shape[0]
+    colors = np.zeros((n, 3))
+    delta = np.zeros((n + k, 3))
 
-    delta = np.zeros(K)
+    L = getLaplacianMatrixUmbrella(mesh, colorsIdx);
 
-    # Build sparse Laplacian Matrix coordinates and values
-    for i in range(N):
-        neighbors = mesh.vertices[i].getVertexNeighbors()
-        indices = map(lambda x: x.ID, neighbors)
-        n = len(indices)
-        I = I + ([i] * (n + 1)) # repeated row
-        J = J + indices + [i] # column indices and this row
-        V = V + ([-1] * n) + [n] # negative weights and row degree
-
-    # augment Laplacian matrix with anchor weights  
-    for i in range(K):
-        I = I + [n + i]
-        J = J + [anchorsIdx[i]]
-        V = V + [WEIGHT] # default anchor weight
+     # augment delta solution matrix with weighted anchors
+    for i in range(k):
+        delta[n + i, :] = WEIGHT * anchors[i, :]
     
-    L = sparse.coo_matrix((V, (I, J)), shape=(N+K, N)).tocsr()
-    delta = np.zeros((N, K));
-    
-    return L
-    #TODO: Finish this
+    # update RGB values with least-squares solution
+    for i in range(3):
+        colors[:, i] = lsqr(L, delta[:, i])[0]
+
     return colors
 
 #Purpose: Given a mesh, to smooth it by subtracting off the delta coordinates
