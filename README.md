@@ -38,7 +38,7 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 ### Sharpening (Umbrella Weighting)
 
-*We can sharpen the teapot by iteratively pulling each vertex farther away from the centroid of its neighbors. Self-intersection can cetainly be made worse, as a single iteration of sharpening performed on the teapot demonstrates.*
+*We can sharpen the teapot by iteratively pulling each vertex farther away from the centroid of its neighbors.*
 
 <img src="img/teapot-sharpen-0.png" width="49%">
 <img src="img/teapot-sharpen-1.png" width="49%">
