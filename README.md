@@ -8,7 +8,7 @@ This assignment was completed as part of a course in 3D Digital Geometry (Math 2
 
 ## Introduction
 
-This assignment revolves around the [Laplace operator](https://en.wikipedia.org/wiki/Laplace_operator). Here, the operator is realized as a big ol' matrix which, when multipled (on the left) by the matrix holding the mesh's vertices, gives us the curvature at each vertex. There are a two flavors of the Laplace operator used here: umbrella weighting and cotangent weighting. The latter attempts to correct for irregularities in the effective resolution of the mesh. 
+This assignment revolves around the [Laplace operator](https://en.wikipedia.org/wiki/Laplace_operator). Here, the operator is realized as a big ol' matrix which, when multiplied (on the left) by the matrix holding the mesh's vertices, gives us the curvature at each vertex. There are a two flavors of the Laplace operator used here: umbrella weighting and cotangent weighting. The latter attempts to correct for irregularities in the effective resolution of the mesh. 
 
 The following features have been implemented in this assignment:
 
