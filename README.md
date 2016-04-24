@@ -20,3 +20,7 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 <img src="img/homer.png" width="49%">
 <img src="img/homer-arms-raised.png" width="49%">
+
+## Color Interpolation
+
+<img src="img/teapot-coloring.png" width="100%">
