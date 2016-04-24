@@ -115,8 +115,7 @@ def solveLaplacianMesh(mesh, anchors, anchorsIdx, cotangent=True):
     for i in range(3):
         mesh.VPos[:, i] = lsqr(L, delta[:, i])[0]
     
-    print "TODO"
-
+    return mesh
 #Purpose: Given a few RGB colors on a mesh, smoothly interpolate those colors
 #by using their values as anchors and 
 #Inputs: mesh (polygon mesh object), anchors (a K x 3 numpy array of anchor
@@ -144,17 +143,37 @@ def smoothColors(mesh, anchors, colorsIdx):
 #from each vertex, normalized by the degree of that vertex
 #Inputs: mesh (polygon mesh object)
 #Returns: Nothing (should update mesh.VPos)
-def doLaplacianSmooth(mesh):
-    print "TODO"
-    #TODO: Finish this
+def doLaplacianSmooth(mesh, sharpen=False):
+    n = mesh.VPos.shape[0] # N x 3
+    I = []
+    J = []
+    V = []
+
+    # Build sparse Laplacian Matrix coordinates and values
+    for i in range(n):
+        neighbors = mesh.vertices[i].getVertexNeighbors()
+        indices = map(lambda x: x.ID, neighbors)
+        z = len(indices)
+        I = I + ([i] * (z + 1)) # repeated row
+        J = J + indices + [i] # column indices and this row
+        V = V + ([-1 / float(z)] * z) + [1] # negative weights divided by degree and row degree
+
+    L = sparse.coo_matrix((V, (I, J)), shape=(n, n)).tocsr()
+
+    diff = np.array(L.dot(mesh.VPos))
+    mesh.VPos = mesh.VPos + diff if sharpen else mesh.VPos - diff
+
+    return mesh
 
 #Purpose: Given a mesh, to sharpen it by adding back the delta coordinates
 #from each vertex, normalized by the degree of that vertex
 #Inputs: mesh (polygon mesh object)
 #Returns: Nothing (should update mesh.VPos)
 def doLaplacianSharpen(mesh):
-    print "TODO"
-    #TODO: Finish this
+
+    doLaplacianSmooth(mesh, sharpen=True)
+
+    return mesh
 
 #Purpose: Given a mesh and a set of anchors, to simulate a minimal surface
 #by replacing the rows of the laplacian matrix with the anchors, setting
