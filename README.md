@@ -6,7 +6,7 @@ Please view this README rendered by GitHub at https://github.com/bmershon/laplac
 
 This assignment was completed as part of a course in 3D Digital Geometry (Math 290) taken at Duke University during Spring 2016. The course was taught by [Chris Tralie](http://www.ctralie.com/).
 
-## Laplacian Mesh Editing
+## [Laplacian Mesh Editing](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#lapmesh)
 
 ### Laplacian Matrix
 
@@ -21,11 +21,11 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 <img src="img/homer.png" width="49%">
 <img src="img/homer-arms-raised.png" width="49%">
 
-## Color Interpolation
+## [Color Interpolation](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#function)
 
 <img src="img/teapot-coloring.png" width="100%">
 
-## Laplacian Smoothing and Sharpening
+## [Laplacian Smoothing and Sharpening](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#sharpening)
 
 ### Smoothing (Umbrella Weighting)
 
@@ -42,3 +42,5 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 <img src="img/teapot-sharpen-0.png" width="49%">
 <img src="img/teapot-sharpen-1.png" width="49%">
+
+## [Minimal Surface](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#membrane)
