@@ -14,7 +14,7 @@ The following features have been implemented in this assignment:
 
 - Laplacian mesh editing (Umbrella and Cotangent weights
 - Color interpolation
-- Smooth/sharpen
+- Smoothing and sharpening
 - Minimal Surfaces
 - Flattening and surface parameterization
 - Texturing using UV coordinates
