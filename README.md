@@ -86,3 +86,9 @@ Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfo
 <img src="textures/texture.png" width="33%">
 <img src="img/homer-texture.png" width="33%">
 <img src="img/teapot-texture.png" width="33%">
+
+*Keenan Crane's geometry processing framework based on discrete exterior calculus (DEC) presents a better solution for UV mapping textures to mesh models.*
+
+<img src="img/crane-conformal-texture.png" width="33%">
+
+
