@@ -77,6 +77,8 @@ Where is my spout?
 <img src="img/teapot-parameterization.png" width="49%">
 <img src="img/teapot-flattened.png" width="49%">
 
+There is a simple bug in the GUI which can produce an ordering of the quad vertices that does not form a counter-clockwise selection. This code was submitted *before the GUI bug was fixed*, therefore the included screenshots show a "lucky" pick. 
+
 ## [Texture Mapping (naive approach)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#texture)
 
 Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfortunately, by using the checkerboard texture, we see a lot of distortion that is not at all aesthetically pleasing. We observe this terrible distorition because the specified quadrilateral (green points) maps to a unit square, and all points "outside" of the mesh are squashed inside of this square. The mapping is certainly not conformal, and thus a straight-lined checkboard pattern is not going to produce an even checkboard patter across the entire mesh in most cases.
