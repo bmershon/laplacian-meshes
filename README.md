@@ -90,3 +90,13 @@ Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfo
 *[Keenan Crane's geometry processing framework](http://www.cs.cmu.edu/~kmcrane/Projects/DGPDEC/) based on discrete exterior calculus (DEC) presents a better solution for UV mapping textures to mesh models.*
 
 <img src="img/crane-conformal-texture.png" width="100%">
+
+## Bloopers (Art contest submission)
+
+### Bug in smoothing algorithm
+
+<img src="img/homer-smoothing-blooper.png" width="49%">
+<img src="img/homer-smooth-blooper-2.png" width="49%">
+
+
+
