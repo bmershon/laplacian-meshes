@@ -83,6 +83,6 @@ Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfo
 
 *Homer and the teapot are textured with the checkerboard.*
 
-<img src="textures/texture.png" width="33.3%">
-<img src="img/homer.png" width="33.3%">
-<img src="img/teapot-texture.png" width="33.3%">
+<img src="textures/texture.png" width="33%">
+<img src="img/homer.png" width="33%">
+<img src="img/teapot-texture.png" width="33%">
