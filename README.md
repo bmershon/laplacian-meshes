@@ -60,7 +60,7 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 ## [Minimal Surface](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#membrane)
 
-*The minimal surface preserves the topology of the handle is perserved when six anchors are set in the teapot mesh.*
+*The minimal surface preserves the topology of handle when six anchors are set in the teapot mesh.*
 
 <img src="img/teapot-minimal-before.png" width="49%">
 <img src="img/teapot-minimal-after.png" width="49%">
