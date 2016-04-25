@@ -59,3 +59,17 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 <img src="img/teapot-sharpen-1.png" width="49%">
 
 ## [Minimal Surface](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#membrane)
+
+<img src="img/homer-minimal-before.png" width="49%">
+<img src="img/homer-minimal-after.png" width="49%">
+
+## [Mesh Parameterization (Flattening)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#flattening)
+
+> I'm a little teapot
+short and flat.
+There is my handle;
+Where is my spout?
+
+<img src="img/teapot-parameterization.png" width="49%">
+<img src="img/teapot-flattened.png" width="49%">
+
