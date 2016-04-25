@@ -77,7 +77,11 @@ Where is my spout?
 <img src="img/teapot-parameterization.png" width="49%">
 <img src="img/teapot-flattened.png" width="49%">
 
-There is a simple bug in the GUI which can produce an ordering of the quad vertices that does not form a counter-clockwise selection. This code was submitted *before the GUI bug was fixed*, therefore the included screenshots show a "lucky" pick. 
+*Another example of flattening: Dragon gets squashed to the unit square.*
+
+<img src="img/dragon-flattened.png" width="49%">
+<img src="img/dragon.png" width="49%">
+
 
 ## [Texture Mapping (naive approach)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#texture)
 
