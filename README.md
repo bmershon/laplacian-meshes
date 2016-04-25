@@ -79,9 +79,8 @@ Where is my spout?
 
 *Another example of flattening: Dragon gets squashed to the unit square.*
 
-<img src="img/dragon-flattened.png" width="49%">
 <img src="img/dragon.png" width="49%">
-
+<img src="img/dragon-flattened.png" width="49%">
 
 ## [Texture Mapping (naive approach)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#texture)
 
