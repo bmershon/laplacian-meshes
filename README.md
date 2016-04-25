@@ -44,7 +44,7 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 ### Smoothing (Umbrella Weighting)
 
-*We can smooth the teapot by iteratively pulling each vertex closer to the centroid of its neighbors.*
+*We can smooth the teapot by iteratively pulling each vertex closer to the centroid of its neighbors. Iteratively smoothing the teapot will destroy small high-curvature features.*
 
 <img src="img/teapot-smooth-0.png" width="24.5%">
 <img src="img/teapot-smooth-1.png" width="24.5%">
@@ -53,17 +53,21 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 ### Sharpening (Umbrella Weighting)
 
-*We can sharpen the teapot by iteratively pulling each vertex farther away from the centroid of its neighbors.*
+*We can sharpen the teapot by iteratively pulling each vertex farther away from the centroid of its neighbors. We notice that when we sharpen, we exacerbate the lower resolution modeling around the base of the teapot's spout. Self intersections can certainly occur by repeatedly sharpening the mesh.*
 
 <img src="img/teapot-sharpen-0.png" width="49%">
 <img src="img/teapot-sharpen-1.png" width="49%">
 
 ## [Minimal Surface](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#membrane)
 
+*The minimal surface preserves the topology of handle when six anchors are set in the teapot mesh.*
+
 <img src="img/teapot-minimal-before.png" width="49%">
 <img src="img/teapot-minimal-after.png" width="49%">
 
 ## [Mesh Parameterization (Flattening)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#flattening)
+
+*A quadrilateral on the surface is chosen and its vertices are mapped to the unit square in the XY plane. The surface vertices are parameterized so that they lie inside of this unit square.*
 
 > I'm a little teapot
 short and flat.
