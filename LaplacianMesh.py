@@ -198,7 +198,6 @@ def makeMinimalSurface(mesh, anchors, anchorsIdx):
             I = I + [i]
             J = J + [i]
             V = V + [WEIGHT]
-            print i
         else:    
             z = len(indices)
             I = I + ([i] * (z + 1)) # repeated row
@@ -291,7 +290,6 @@ def doFlattening(mesh, quadIdx):
             I = I + [i]
             J = J + [i]
             V = V + [WEIGHT]
-            print i
         else:    
             z = len(indices)
             I = I + ([i] * (z + 1)) # repeated row
