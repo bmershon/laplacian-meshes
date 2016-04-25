@@ -95,7 +95,7 @@ Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfo
 
 When you make a mistake in geometry processing, your mistakes can be beautiful.
 
-*Homer experiences an unfortunate bug in smoothing algorithm.*
+*Homer experiences an unfortunate bug in the smoothing algorithm.*
 
 <img src="img/homer-smoothing-blooper.png" width="49%">
 <img src="img/homer-smooth-blooper-2.png" width="49%">
