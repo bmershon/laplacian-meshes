@@ -229,7 +229,7 @@ class MeshViewerCanvas(BasicMeshCanvas):
         U = getTexCoords(self.mesh, quadIdxs)
         self.mesh.VTexCoords = U
         if self.mesh.texID == -1:
-            self.mesh.texID = loadTexture("texture.png")
+            self.mesh.texID = loadTexture("textures/texture.png")
             print "Loaded texture: ", self.mesh.texID
         self.useTexture = True
         self.parent.useTextureCheckbox.SetValue(True)
