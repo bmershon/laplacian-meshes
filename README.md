@@ -6,7 +6,7 @@ Please view this README rendered by GitHub at https://github.com/bmershon/laplac
 
 This assignment was completed as part of a course in 3D Digital Geometry (Math 290) taken at Duke University during Spring 2016. The course was taught by [Chris Tralie](http://www.ctralie.com/).
 
-*LaplacianMesh.py* is the file student's are responsible for editing. The rendering engine and GUI is provided by Chris Tralie.
+*LaplacianMesh.py* is the file students are responsible for editing. The rendering engine and GUI is provided by Chris Tralie.
 
 ## Introduction
 
