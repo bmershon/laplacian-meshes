@@ -183,8 +183,38 @@ def doLaplacianSharpen(mesh):
 #coordinates), anchorsIdx (a parallel array of the indices of the anchors)
 #Returns: Nothing (should update mesh.VPos)
 def makeMinimalSurface(mesh, anchors, anchorsIdx):
-    print "TODO"
-    #TODO: Finish this
+    n = mesh.VPos.shape[0] # N x 3
+    k = anchorsIdx.shape[0]
+    I = []
+    J = []
+    V = []
+
+    # Build sparse Laplacian Matrix coordinates and values
+    for i in range(n):
+        neighbors = mesh.vertices[i].getVertexNeighbors()
+        indices = map(lambda x: x.ID, neighbors)
+
+        if i in anchorsIdx:
+            I = I + [i]
+            J = J + [i]
+            V = V + [WEIGHT]
+            print i
+        else:    
+            z = len(indices)
+            I = I + ([i] * (z + 1)) # repeated row
+            J = J + indices + [i] # column indices and this row
+            V = V + ([-1 / float(z)] * z) + [1] # negative weights divided by degree and row degree
+
+    L = sparse.coo_matrix((V, (I, J)), shape=(n, n)).tocsr()
+    delta = np.zeros((n, 3))
+    delta[np.array(anchorsIdx), :] = WEIGHT * anchors
+
+    # update mesh vertices with least-squares solution
+    for i in range(3):
+        mesh.VPos[:, i] = lsqr(L, delta[:, i])[0]
+
+    return mesh
+
 
 ##############################################################
 ##        Spectral Representations / Heat Flow              ##
@@ -240,9 +270,43 @@ def getHKS(mesh, K, t):
 #Inputs: mesh (polygon mesh object), quadIdxs (a length 4 array of indices
 #into the mesh of the four points that are to be anchored, in CCW order)
 #Returns: nothing (update mesh.VPos)
-def doFlattening(mesh, quadIdxs):
-    print "TODO"
-    #TODO: Finish this
+def doFlattening(mesh, quadIdx):
+    n = mesh.VPos.shape[0] # N x 3
+    k = quadIdx.shape[0]
+    I = []
+    J = []
+    V = []
+    anchors = np.array([[0, 0, 0],
+                        [0, 1, 0],
+                        [1, 1, 0],
+                        [1, 0, 0]])
+
+    # Build sparse Laplacian Matrix coordinates and values
+    for i in range(n):
+        vertex = mesh.vertices[i]
+        neighbors = mesh.vertices[i].getVertexNeighbors()
+        indices = map(lambda x: x.ID, neighbors)
+
+        if i in quadIdx:
+            I = I + [i]
+            J = J + [i]
+            V = V + [WEIGHT]
+            print i
+        else:    
+            z = len(indices)
+            I = I + ([i] * (z + 1)) # repeated row
+            J = J + indices + [i] # column indices and this row
+            V = V + ([-1 / float(z)] * z) + [1] # negative weights divided by degree and row degree
+
+    L = sparse.coo_matrix((V, (I, J)), shape=(n, n)).tocsr()
+    delta = np.zeros((n, 3))
+    delta[np.array(quadIdx), :] = WEIGHT * anchors
+
+    # update mesh vertices with least-squares solution
+    for i in range(3):
+        mesh.VPos[:, i] = lsqr(L, delta[:, i])[0]
+
+    return mesh
 
 #Purpose: Given 4 vertex indices on a quadrilateral, to anchor them to the 
 #square and flatten the rest of the mesh inside of that square.  Then, to 
