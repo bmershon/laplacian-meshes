@@ -99,4 +99,3 @@ When you make a mistake in geometry processing, your mistakes can be beautiful.
 
 <img src="img/homer-smoothing-blooper.png" width="49%">
 <img src="img/homer-smooth-blooper-2.png" width="49%">
-
