@@ -60,8 +60,8 @@ Rather than using equal weights for each neighboring vertex in the Laplacian ope
 
 ## [Minimal Surface](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#membrane)
 
-<img src="img/homer-minimal-before.png" width="49%">
-<img src="img/homer-minimal-after.png" width="49%">
+<img src="img/teapot-minimal-before.png" width="49%">
+<img src="img/teapot-minimal-after.png" width="49%">
 
 ## [Mesh Parameterization (Flattening)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#flattening)
 
@@ -72,4 +72,3 @@ Where is my spout?
 
 <img src="img/teapot-parameterization.png" width="49%">
 <img src="img/teapot-flattened.png" width="49%">
-
