@@ -76,3 +76,13 @@ Where is my spout?
 
 <img src="img/teapot-parameterization.png" width="49%">
 <img src="img/teapot-flattened.png" width="49%">
+
+## [Texture Mapping (naive approach)](http://www.ctralie.com/Teaching/COMPSCI290/Assignments/Group3_LaplacianMesh/#texture)
+
+Here, we apply a texture to a parameterization of the surface (UV Mapping). Unfortunately, by using the checkerboard texture, we see a lot of distortion that is not at all aesthetically pleasing. We observe this terrible distorition because the specified quadrilateral (green points) maps to a unit square, and all points "outside" of the mesh are squashed inside of this square. The mapping is certainly not conformal, and thus a straight-lined checkboard pattern is not going to produce an even checkboard patter across the entire mesh in most cases.
+
+*Homer and the teapot are textured with the checkerboard.*
+
+<img src="textures/texture.png" width="33.3%">
+<img src="img/homer.png" width="33.3%">
+<img src="img/teapot-texture.png" width="33.3%">
