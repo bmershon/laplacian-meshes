@@ -271,7 +271,7 @@ def getHKS(mesh, K, t):
 #Returns: nothing (update mesh.VPos)
 def doFlattening(mesh, quadIdx):
     n = mesh.VPos.shape[0] # N x 3
-    k = quadIdx.shape[0]
+    k = np.array(quadIdx).shape[0]
     I = []
     J = []
     V = []
@@ -279,8 +279,6 @@ def doFlattening(mesh, quadIdx):
                         [0, 1, 0],
                         [1, 1, 0],
                         [1, 0, 0]])
-
-    print anchors
     # Build sparse Laplacian Matrix coordinates and values
     for i in range(n):
         vertex = mesh.vertices[i]
@@ -315,7 +313,7 @@ def doFlattening(mesh, quadIdx):
 #Returns: U (an N x 2 matrix of texture coordinates)
 def getTexCoords(mesh, quadIdx):
     n = mesh.VPos.shape[0] # N x 3
-    k = quadIdx.shape[0]
+    k = np.array(quadIdx).shape[0]
     I = []
     J = []
     V = []
@@ -339,7 +337,7 @@ def getTexCoords(mesh, quadIdx):
             z = len(indices)
             I = I + ([i] * (z + 1)) # repeated row
             J = J + indices + [i] # column indices and this row
-            V = V + ([-1 / float(z)] * z) + [1] # negative weights divided by degree and row degree
+            V = V + ([-1 / max(float(z), 1)] * z) + [1] # negative weights divided by degree and row degree
 
     L = sparse.coo_matrix((V, (I, J)), shape=(n, n)).tocsr()
     delta = np.zeros((n, 3))

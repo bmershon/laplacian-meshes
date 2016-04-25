@@ -41,14 +41,21 @@ HKS_T = 20
 (COLORPICK_NONE, COLORPICK_WAITING, COLORPICK_PICKVERTEX, COLORPICK_PICKCOLOR) = (0, 1, 2, 3)
 
 class MeshViewerCanvas(BasicMeshCanvas):
+    def clearAllSelections(self):
+        #State variables for laplacian mesh operations
+        self.laplacianConstraints = {} #Elements will be key-value pairs (idx, Point3D(new position))
+        self.laplaceCurrentIdx = -1
+        self.laplacianSelections = [] #Stores an ordered list of the selections (used for flattening)
+        
+        self.colorChoices = {} #Elements will be key-value paris (idx, np.array([R, G, B]))
+        self.colorCurrentIdx = -1    
+
     def __init__(self, parent):
         super(MeshViewerCanvas, self).__init__(parent)
         self.GUIState = STATE_NORMAL
         self.GUISubstate = SUBSTATE_NONE
         
-        #State variables for laplacian mesh operations
-        self.laplacianConstraints = {} #Elements will be key-value pairs (idx, Point3D(new position))
-        self.laplaceCurrentIdx = -1
+        self.clearAllSelections()
         
         #State variables for heat, etc
         (self.eigvalues, self.eigvectors) = (np.array([]), np.array([]))
@@ -56,8 +63,6 @@ class MeshViewerCanvas(BasicMeshCanvas):
         self.heat_ts = np.linspace(0, 1000, 100)
         
         #State variables for color picking
-        self.colorChoices = {} #Elements will be key-value paris (idx, np.array([R, G, B]))
-        self.colorCurrentIdx = -1
         self.colorPickTexID = None
         self.colorPosVBO = None
         self.colorColorVBO = None
@@ -218,8 +223,8 @@ class MeshViewerCanvas(BasicMeshCanvas):
         self.Refresh()
     
     def doFlattening(self, evt):
-        (anchors, quadIdxs) = self.getAnchors()
-        doFlattening(self.mesh, quadIdxs)
+        print self.laplacianSelections
+        doFlattening(self.mesh, self.laplacianSelections)
         self.mesh.needsDisplayUpdate = True
         self.mesh.updateIndexDisplayList()
         self.Refresh()
@@ -229,7 +234,7 @@ class MeshViewerCanvas(BasicMeshCanvas):
         U = getTexCoords(self.mesh, quadIdxs)
         self.mesh.VTexCoords = U
         if self.mesh.texID == -1:
-            self.mesh.texID = loadTexture("./textures/texture.png")
+            self.mesh.texID = loadTexture("texture.png")
             print "Loaded texture: ", self.mesh.texID
         self.useTexture = True
         self.parent.useTextureCheckbox.SetValue(True)
@@ -349,13 +354,16 @@ class MeshViewerCanvas(BasicMeshCanvas):
                 [R, G, B, A] = [int(pixel.encode("hex")[i*2:(i+1)*2], 16) for i in range(4)]
                 idx = extractFromRGBA(R, G, B, 0) - 1
                 if idx >= 0 and idx < len(self.mesh.vertices):
+                    print idx
                     if idx in self.laplacianConstraints:
                         #De-select if it's already selected
                         self.laplaceCurrentIdx = -1
                         self.laplacianConstraints.pop(idx, None)
+                        self.laplacianSelections.remove(idx)
                     else:
                         self.laplacianConstraints[idx] = np.array(self.mesh.VPos[self.mesh.vertices[idx].ID, :])
                         self.laplaceCurrentIdx = idx
+                        self.laplacianSelections.append(idx)
                 self.GUISubstate = CHOOSELAPLACE_WAITING
                 self.Refresh()
                 
@@ -624,6 +632,7 @@ class MeshViewerFrame(wx.Frame):
             print "Finished loading mesh"
             print self.glcanvas.mesh
             self.glcanvas.initMeshBBox()
+            self.glcanvas.clearAllSelections()
             self.glcanvas.Refresh()
         dlg.Destroy()
         return
